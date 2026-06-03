@@ -20,9 +20,9 @@ const Board = () => {
 
   return (
     <div className="board">
-      <Column title="Backlog" tasks={backlogTasks} />
-      <Column title="In Progress" tasks={progressTasks} />
-      <Column title="Done" tasks={doneTasks} />
+      <Column title="Backlog" tasks={backlogTasks} columnType="backlog"/>
+      <Column title="In Progress" tasks={progressTasks} columnType="inProgress"/>
+      <Column title="Done" tasks={doneTasks} columnType="done"/>
     </div>
   );
 };

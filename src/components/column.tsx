@@ -1,20 +1,32 @@
 import type { Task } from "../types/task";
 import TaskCard from "../components/taskCard"
-import { Button, Chip } from "@mui/material";
+import { Button } from "@mui/material";
+import { useBoardStore } from "../store/boardStore";
+
 
 interface ColumnProps {
     title: string;
     tasks: Task[];
+    columnType: Task["column"];
 }
 
-const Column = ({ title, tasks }: ColumnProps) => {
+const Column = ({ title, tasks, columnType }: ColumnProps) => {
+
+    const addTask = useBoardStore(
+        (state) => state.addTask
+    );
+
     return(
         <div className="column">
             <div className="column-header">
-                <h3>{title}</h3>
-                <Chip label={tasks.length} size="small" />
+                <h3>
+                    {title}
+                    <span className="task-count">
+                        ({tasks.length})
+                    </span>
+                </h3>
             </div>
-            <Button variant="outlined" fullWidth >Add Task</Button>
+            <Button variant="contained" fullWidth onClick={()=> addTask(columnType)} >Add Task</Button>
             <div className="task-list">
                 {
                     tasks.map((task) => (
@@ -26,4 +38,4 @@ const Column = ({ title, tasks }: ColumnProps) => {
     );
 };
 
-export default Column;  
+export default Column;
