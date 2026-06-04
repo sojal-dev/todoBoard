@@ -27,8 +27,19 @@ const TaskCard = ({ task }: TaskCardProps) => {
         (state) => state.deleteTask
     );
 
+    const selectedTaskId = useBoardStore(
+        (state) => state.selectedTaskId
+    );
+
+    const setSelectedTask = useBoardStore(
+        (state) => state.setSelectedTask
+    );
+
+    // console.log(selectedTaskId);
+
+
     return(
-        <div className="task-card">
+        <div className="task-card" onClick={()=> setSelectedTask(task.id)}>
             <div className="d-flex gap-2 align-items-center justify-content-between">
                 <h4 className="mb-0">{task.title}</h4>
                 <div className="d-flex gap-3 align-items-center">

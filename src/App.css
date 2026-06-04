@@ -113,3 +113,14 @@ h1,h2,h3,h4,h5,h6{
 .task-card .delete-btn button:hover{
   background-color: #ee0000;
 }
+.task-detail-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 500px;
+  height: 100vh;
+  background: #131a2b;
+  padding: 20px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 99999;
+}

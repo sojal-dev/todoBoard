@@ -12,4 +12,4 @@ export interface Task {
   tagId?: string;
   column: ColumnType;
   order: number;
-}
+} 
