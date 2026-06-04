@@ -1,6 +1,6 @@
 import { useBoardStore } from "../store/boardStore";
 import { useState, useEffect } from "react";
-import { TextField, Button, MenuItem } from "@mui/material";
+import { TextField, Button, MenuItem, FormControl, Select } from "@mui/material";
 
 const TaskPanel = () => {
   const tasks = useBoardStore(
@@ -54,134 +54,143 @@ const TaskPanel = () => {
   };
 
   return (
-    <div className="task-detail-panel">
-      <h2>Task Details</h2>
-      <TextField
-        fullWidth
-        label="Title"
-        value={title}
-        onChange={(e) =>
-          setTitle(e.target.value)
-        }
-        margin="normal"
-      />
-      <TextField
-        fullWidth
-        multiline
-        rows={4}
-        label="Description"
-        value={description}
-        onChange={(e) =>
-          setDescription(
-            e.target.value
-          )
-        }
-        margin="normal"
-      />
-      <TextField
-        select
-        fullWidth
-        label="Priority"
-        value={priority}
-        onChange={(e) =>
-          setPriority(
-            e.target.value as
-              | "low"
-              | "medium"
-              | "high"
-          )
-        }
-        margin="normal"
-      >
-        <MenuItem value="low">
-          Low
-        </MenuItem>
+    <div className="task-detail-panel-wrapper">
+        <div className="task-detail-panel">
+        <h2 className="mb-4">Task Details</h2>
+        <div className="fields">
+            <label>Title</label>
+            <TextField
+                fullWidth
+                value={title}
+                onChange={(e) =>
+                setTitle(e.target.value)
+                }
+                margin="normal"
+            />
+        </div>
+        <div className="fields">
+            <label>Description</label>
+            <TextField
+                fullWidth
+                multiline
+                rows={4}
+                value={description}
+                onChange={(e) =>
+                setDescription(
+                    e.target.value
+                )
+                }
+                margin="normal"
+            />
+        </div>
+        <div className="fields">
+            <label>Priority</label>
 
-        <MenuItem value="medium">
-          Medium
-        </MenuItem>
+            <FormControl fullWidth>
+                <Select
+                value={priority}
+                onChange={(e) =>
+                    setPriority(
+                    e.target.value as
+                        | "low"
+                        | "medium"
+                        | "high"
+                    )
+                }
+                >
+                <MenuItem value="low">
+                    Low
+                </MenuItem>
 
-        <MenuItem value="high">
-          High
-        </MenuItem>
-      </TextField>
+                <MenuItem value="medium">
+                    Medium
+                </MenuItem>
 
-        <label>Due Date</label>
-      <TextField
-        fullWidth
-        type="date"
-        label="Due Date"
-        value={dueDate}
-        onChange={(e) =>
-          setDueDate(
-            e.target.value
-          )
-        }
-        margin="normal"
-      />
+                <MenuItem value="high">
+                    High
+                </MenuItem>
+                </Select>
+            </FormControl>
+            </div>
+        <div className="fields">
+            <label>Due Date</label>
+            <TextField
+                fullWidth
+                type="date"
+                value={dueDate}
+                onChange={(e) =>
+                setDueDate(
+                    e.target.value
+                )
+                }
+                margin="normal"
+            />
+        </div>
+        <div className="fields">
+            <label>Assignee</label>
 
-      <TextField
-        select
-        fullWidth
-        label="Assignee"
-        value={assigneeId}
-        onChange={(e) =>
-          setAssigneeId(
-            e.target.value
-          )
-        }
-        margin="normal"
-      >
-        <MenuItem value="john">
-          Sojal
-        </MenuItem>
+            <FormControl fullWidth>
+                <Select
+                value={assigneeId}
+                onChange={(e) =>
+                    setAssigneeId(
+                    e.target.value
+                    )
+                }
+                >
+                <MenuItem value="john">
+                    Sojal
+                </MenuItem>
 
-        <MenuItem value="sarah">
-          Harsh
-        </MenuItem>
+                <MenuItem value="sarah">
+                    Harsh
+                </MenuItem>
 
-        <MenuItem value="alex">
-          Rishi
-        </MenuItem>
-      </TextField>
+                <MenuItem value="alex">
+                    Rishi
+                </MenuItem>
+                </Select>
+            </FormControl>
+            </div>
+            <div className="fields">
+                <label>Tag</label>
 
-      <TextField
-        select
-        fullWidth
-        label="Tag"
-        value={tagId}
-        onChange={(e) =>
-          setTagId(
-            e.target.value
-          )
-        }
-        margin="normal"
-      >
-        <MenuItem value="frontend">
-          Frontend
-        </MenuItem>
+                <FormControl fullWidth>
+                    <Select
+                    value={tagId}
+                    onChange={(e) =>
+                        setTagId(
+                        e.target.value
+                        )
+                    }
+                    >
+                    <MenuItem value="frontend">
+                        Frontend
+                    </MenuItem>
 
-        <MenuItem value="backend">
-          Backend
-        </MenuItem>
+                    <MenuItem value="backend">
+                        Backend
+                    </MenuItem>
 
-        <MenuItem value="bug">
-          Bug
-        </MenuItem>
+                    <MenuItem value="bug">
+                        Bug
+                    </MenuItem>
 
-        <MenuItem value="bug">
-          Client Dependency
-        </MenuItem>
-      </TextField>
-
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
-        onClick={handleSave}
-      >
-        Save Changes
-      </Button>
+                    <MenuItem value="client-dependency">
+                        Client Dependency
+                    </MenuItem>
+                    </Select>
+                </FormControl>
+                </div>
+        <Button
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={handleSave}
+        >
+            Save Changes
+        </Button>
+        </div>
     </div>
   );
 };

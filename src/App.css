@@ -113,7 +113,7 @@ h1,h2,h3,h4,h5,h6{
 .task-card .delete-btn button:hover{
   background-color: #ee0000;
 }
-.task-detail-panel {
+.task-detail-panel-wrapper{
   position: fixed;
   right: 0;
   top: 0;
@@ -122,5 +122,39 @@ h1,h2,h3,h4,h5,h6{
   background: #131a2b;
   padding: 20px;
   border-left: 1px solid rgba(255,255,255,0.1);
-  z-index: 99999;
+  z-index: 999;
+  overflow: auto;
+}
+.task-detail-panel input{
+    border-radius: 4px;
+    color: #fff;
+}
+.task-detail-panel *{
+    font-family: 'Montserrat', sans-serif !important;
+}
+.task-detail-panel fieldset{
+    border-color: #fff !important
+}
+.task-detail-panel label{
+    color: #fff !important;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    margin-bottom: 8px
+}
+.task-detail-panel .MuiFormControl-root{
+    margin: 0;
+}
+.task-detail-panel .fields{
+    margin-bottom: 24px
+}
+.task-detail-panel{
+    overflow: auto;
+}
+.task-detail-panel *{
+    color: #fff !important;
+}
+.MuiButtonBase-root{
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500;
 }
