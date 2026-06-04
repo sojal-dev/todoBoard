@@ -96,3 +96,20 @@ h1,h2,h3,h4,h5,h6{
     margin-left: 10px;
     color: #94a3b8;
 }
+.task-card .delete-btn {
+  opacity: 0;
+}
+
+.task-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.task-card .delete-btn button{
+  padding: 6px !important;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #1976d2;
+}
+.task-card .delete-btn button:hover{
+  background-color: #ee0000;
+}
