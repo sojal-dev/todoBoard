@@ -13,6 +13,10 @@ interface BoardStore {
     id: string,
     updates: Partial<Task>
   ) => void;
+  toastMessage: string;
+  showToast: boolean;
+  setToast: (message: string) => void;
+  closeToast: ()=> void;
 }
 
 export const useBoardStore = create<BoardStore>()(
@@ -52,7 +56,17 @@ export const useBoardStore = create<BoardStore>()(
             task.id === id ? { ...task, ...updates } : task
           ),
         })),
-    }),
+            toastMessage: "",
+            showToast: false,
+            setToast: (message) => set({
+              toastMessage: message,
+              showToast: true,
+            }),
+
+            closeToast: () => set({
+              showToast: false,
+            }),
+            }),
     {
       name: "todoBoard-storage",
     }

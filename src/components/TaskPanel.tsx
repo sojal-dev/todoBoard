@@ -1,6 +1,6 @@
 import { useBoardStore } from "../store/boardStore";
 import { useState, useEffect } from "react";
-import { TextField, Button, MenuItem, FormControl, Select } from "@mui/material";
+import { TextField, Button, MenuItem, FormControl, Select, Snackbar, Alert } from "@mui/material";
 
 const TaskPanel = () => {
   const tasks = useBoardStore(
@@ -19,12 +19,22 @@ const TaskPanel = () => {
     (task) => task.id === selectedTaskId
   );
 
+  const setSelectedTask = useBoardStore(
+    (state) => state.setSelectedTask
+  );
+
+  const setToast = useBoardStore(
+    (state) => state.setToast
+  );
+
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<"low" | "medium" | "high">("medium");
   const [dueDate, setDueDate] = useState("");
   const [assigneeId, setAssigneeId] = useState("");
   const [tagId, setTagId] = useState("");
+  const [toastOpen, setToastOpen] = useState(false);
 
   useEffect(() => {
     if (!selectedTask) 
@@ -51,12 +61,18 @@ const TaskPanel = () => {
       assigneeId,
       tagId,
     });
+    setToast("Task Updated Successfully");
+    setSelectedTask(null);
   };
 
   return (
+    <>
     <div className="task-detail-panel-wrapper">
-        <div className="task-detail-panel">
-        <h2 className="mb-4">Task Details</h2>
+        <div className="task-panel-header d-flex justify-content-between align-items-center">
+            <h2 className="mb-0">Task Details</h2>
+            <button className="close-btn" onClick={()=> setSelectedTask(null)}>✕</button>
+        </div>
+        <div className="task-detail-panel mt-4">
         <div className="fields">
             <label>Title</label>
             <TextField
@@ -192,6 +208,7 @@ const TaskPanel = () => {
         </Button>
         </div>
     </div>
+    </>
   );
 };
 

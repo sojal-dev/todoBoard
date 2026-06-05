@@ -120,7 +120,6 @@ h1,h2,h3,h4,h5,h6{
   width: 500px;
   height: 100vh;
   background: #131a2b;
-  padding: 20px;
   border-left: 1px solid rgba(255,255,255,0.1);
   z-index: 999;
   overflow: auto;
@@ -157,4 +156,23 @@ h1,h2,h3,h4,h5,h6{
 .MuiButtonBase-root{
     font-family: 'Poppins', sans-serif !important;
     font-weight: 500;
+}
+.task-panel-header .close-btn{
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+    color: #fff;
+    font-size: 30px;
+}
+.task-panel-header{
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    background-color: #131a2b;
+    z-index: 9;
+    border-bottom: 1px solid rgba(255,255,255,0.1)
+}
+.task-detail-panel{
+    padding: 20px;
+    padding-top: 0;
 }

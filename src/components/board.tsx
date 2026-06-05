@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from "@mui/material";
 import { useBoardStore } from "../store/boardStore";
 import Column from "./column";
 import TaskPanel from "./TaskPanel";
@@ -19,6 +20,18 @@ const Board = () => {
     (task) => task.column === "done"
   );
 
+  const showToast = useBoardStore(
+    (state) => state.showToast
+  );
+
+  const toastMessage = useBoardStore(
+    (state) => state.toastMessage
+  );
+
+  const closeToast = useBoardStore(
+    (state) => state.closeToast
+  );
+
 
   return (
     <>
@@ -28,6 +41,23 @@ const Board = () => {
         <Column title="In Progress" tasks={progressTasks} columnType="inProgress"/>
         <Column title="Done" tasks={doneTasks} columnType="done"/>
       </div>
+      <Snackbar
+        open={showToast}
+        autoHideDuration={3000}
+        onClose={closeToast}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          onClose={closeToast}
+        >
+          {toastMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
