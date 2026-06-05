@@ -1,14 +1,17 @@
-import { Button, Chip } from "@mui/material";
+import { Chip } from "@mui/material";
 import type { Task } from "../types/task";
 import { useBoardStore } from "../store/boardStore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
 
 interface TaskCardProps {
     task: Task;
 }
 
 const TaskCard = ({ task }: TaskCardProps) => {
+
+    const[showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const getPriorityColor = () => {
         switch(task.priority) {
@@ -35,11 +38,14 @@ const TaskCard = ({ task }: TaskCardProps) => {
         (state) => state.setSelectedTask
     );
 
+
     // console.log(selectedTaskId);
-                            console.log(task.assigneeId)
+    // console.log(task.assigneeId)
+
 
 
     const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
+
 
     return(
         <div className="task-card" onClick={()=> setSelectedTask(task.id)}>
@@ -47,13 +53,27 @@ const TaskCard = ({ task }: TaskCardProps) => {
                 <h4 className="mb-0">{task.title}</h4>
                 <div className="d-flex gap-3 align-items-center">
                     <div className="delete-btn">
+                        {
+                            showDeleteConfirm ? (
+                                <div className="delete-confirm d-flex gap-2 align-items-center" onClick={(e) => e.stopPropagation()}>
+                                    <span>Delete?</span>
+                                    <button className="green" onClick={()=> deleteTask(task.id)}>Yes</button>
+                                    <button onClick={()=> setShowDeleteConfirm(false)}>Cancel</button>
+                                </div>
+                            ) : (
                             <IconButton
                                 size="small"
                                 color="error"
-                                onClick={() => deleteTask(task.id)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowDeleteConfirm(true);
+                                }}
                             >
                                 <DeleteIcon fontSize="medium" />
                             </IconButton>
+                            )
+                        }
+                            
                         </div>
                     <Chip label={task.priority.toUpperCase()} color={getPriorityColor()} size="small" />
                 </div>

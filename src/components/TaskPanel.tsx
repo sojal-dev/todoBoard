@@ -35,6 +35,26 @@ const TaskPanel = () => {
   const [assigneeId, setAssigneeId] = useState("");
   const [tagId, setTagId] = useState("");
   const [toastOpen, setToastOpen] = useState(false);
+  const [isChange, setIsChange] = useState(false);
+
+    useEffect(()=> {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if(e.key === "Escape"){
+                handleClose();
+            }
+        };
+
+        window.addEventListener(
+            "keydown",
+            handleKeyDown
+        );
+
+        return() => window.removeEventListener(
+            "keydown",
+            handleKeyDown
+        );
+
+    }, []);
 
   useEffect(() => {
     if (!selectedTask) 
@@ -61,16 +81,26 @@ const TaskPanel = () => {
       assigneeId,
       tagId,
     });
+    setIsChange(false);
     setToast("Task Updated Successfully");
     setSelectedTask(null);
   };
+
+  const handleClose = () => {
+    if(isChange && !window.confirm("You have unsaved changes. Close anyway?")){
+        return;
+    }
+    setSelectedTask(null);
+  };
+
+
 
   return (
     <>
     <div className="task-detail-panel-wrapper">
         <div className="task-panel-header d-flex justify-content-between align-items-center">
             <h2 className="mb-0">Task Details</h2>
-            <button className="close-btn" onClick={()=> setSelectedTask(null)}>✕</button>
+            <button className="close-btn" onClick={handleClose}>✕</button>
         </div>
         <div className="task-detail-panel mt-4">
         <div className="fields">
@@ -78,9 +108,10 @@ const TaskPanel = () => {
             <TextField
                 fullWidth
                 value={title}
-                onChange={(e) =>
-                setTitle(e.target.value)
-                }
+                onChange={(e) =>{
+                setTitle(e.target.value);
+                setIsChange(true)
+                }}
                 margin="normal"
             />
         </div>
@@ -91,11 +122,12 @@ const TaskPanel = () => {
                 multiline
                 rows={4}
                 value={description}
-                onChange={(e) =>
+                onChange={(e) =>{
                 setDescription(
                     e.target.value
                 )
-                }
+                setIsChange(true)
+                }}
                 margin="normal"
             />
         </div>
@@ -105,14 +137,15 @@ const TaskPanel = () => {
             <FormControl fullWidth>
                 <Select
                 value={priority}
-                onChange={(e) =>
+                onChange={(e) =>{
                     setPriority(
                     e.target.value as
                         | "low"
                         | "medium"
                         | "high"
                     )
-                }
+                setIsChange(true)
+                }}
                 >
                 <MenuItem value="low">
                     Low
@@ -134,11 +167,12 @@ const TaskPanel = () => {
                 fullWidth
                 type="date"
                 value={dueDate}
-                onChange={(e) =>
+                onChange={(e) =>{
                 setDueDate(
                     e.target.value
                 )
-                }
+                setIsChange(true)
+                }}
                 margin="normal"
             />
         </div>
@@ -148,11 +182,12 @@ const TaskPanel = () => {
             <FormControl fullWidth>
                 <Select
                 value={assigneeId}
-                onChange={(e) =>
+                onChange={(e) => {
                     setAssigneeId(
                     e.target.value
                     )
-                }
+                setIsChange(true)
+                }}
                 >
                 <MenuItem value="sojal-saini">
                     Sojal Saini
@@ -174,11 +209,12 @@ const TaskPanel = () => {
                 <FormControl fullWidth>
                     <Select
                     value={tagId}
-                    onChange={(e) =>
+                    onChange={(e) => {
                         setTagId(
                         e.target.value
                         )
-                    }
+                        setIsChange(true)
+                    }}
                     >
                     <MenuItem value="frontend">
                         Frontend

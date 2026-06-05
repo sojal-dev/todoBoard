@@ -225,3 +225,18 @@ body:has(.task-detail-panel-wrapper)::before{
     position: absolute;
     z-index: 9
 }
+.task-card .delete-confirm button{
+    border: 0;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.task-card .delete-confirm span{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+} 
+.task-card .delete-confirm .green:hover{
+    background-color: green;
+}
