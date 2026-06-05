@@ -17,6 +17,10 @@ interface BoardStore {
   showToast: boolean;
   setToast: (message: string) => void;
   closeToast: ()=> void;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+  priorityFilter: string;
+  setPriorityFilter: (value: string) => void;
 }
 
 export const useBoardStore = create<BoardStore>()(
@@ -66,6 +70,17 @@ export const useBoardStore = create<BoardStore>()(
             closeToast: () => set({
               showToast: false,
             }),
+
+            searchTerm: "",
+            setSearchTerm: (value) => set({
+              searchTerm: value,
+            }),
+
+            priorityFilter: "",
+            setPriorityFilter: (value) => set({
+              priorityFilter: value,
+            }),
+
             }),
     {
       name: "todoBoard-storage",

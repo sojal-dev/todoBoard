@@ -54,7 +54,7 @@ const TaskPanel = () => {
             handleKeyDown
         );
 
-    }, []);
+    }, [isChange]);
 
   useEffect(() => {
     if (!selectedTask) 

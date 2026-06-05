@@ -8,15 +8,34 @@ const Board = () => {
     (state) => state.tasks
   );
 
-  const backlogTasks = tasks.filter(
+  const searchTerm = useBoardStore(
+    (state) => state.searchTerm
+  );
+
+  const priorityFilter = useBoardStore(
+      (state) => state.priorityFilter
+  );
+
+  const filteredTasks = tasks.filter(
+    (task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((task) => {
+      if(!priorityFilter)
+        return true;
+
+      return(
+        task.priority === priorityFilter
+      );
+    });
+
+  const backlogTasks = filteredTasks.filter(
     (task) => task.column === "backlog"
   );
 
-  const progressTasks = tasks.filter(
+  const progressTasks = filteredTasks.filter(
     (task) => task.column === "inProgress"
   );
 
-  const doneTasks = tasks.filter(
+  const doneTasks = filteredTasks.filter(
     (task) => task.column === "done"
   );
 
@@ -31,6 +50,7 @@ const Board = () => {
   const closeToast = useBoardStore(
     (state) => state.closeToast
   );
+
 
 
   return (
