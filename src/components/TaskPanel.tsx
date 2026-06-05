@@ -154,16 +154,16 @@ const TaskPanel = () => {
                     )
                 }
                 >
-                <MenuItem value="john">
-                    Sojal
+                <MenuItem value="sojal-saini">
+                    Sojal Saini
                 </MenuItem>
 
-                <MenuItem value="sarah">
-                    Harsh
+                <MenuItem value="harsh-dhiman">
+                    Harsh Dhiman
                 </MenuItem>
 
-                <MenuItem value="alex">
-                    Rishi
+                <MenuItem value="rishi-saini">
+                    Rishi Saini
                 </MenuItem>
                 </Select>
             </FormControl>

@@ -36,7 +36,10 @@ const TaskCard = ({ task }: TaskCardProps) => {
     );
 
     // console.log(selectedTaskId);
+                            console.log(task.assigneeId)
 
+
+    const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
 
     return(
         <div className="task-card" onClick={()=> setSelectedTask(task.id)}>
@@ -53,6 +56,36 @@ const TaskCard = ({ task }: TaskCardProps) => {
                             </IconButton>
                         </div>
                     <Chip label={task.priority.toUpperCase()} color={getPriorityColor()} size="small" />
+                </div>
+            </div>
+            <div className="info">
+                {
+                    task.description && (
+                        <p className="description">{task.description}</p>
+                    )
+                }
+                <div className="task-meta d-flex justify-content-between align-items-center gap-3">
+                    <div className="tag-date-wrapper d-flex gap-3 align-items-center">
+                        {
+                            task.tagId && (
+                                <span className="task-tag">
+                                    {task.tagId}
+                                </span>
+                            )
+                        }
+
+                        {
+                            task.dueDate && (
+                                <span className={isOverdue ? "due-date overdue" : "due-date"}>
+                                    <label>Due Date:</label> {task.dueDate}
+                                </span>
+                            )
+                        }
+                    </div>
+
+                    <span className="avatar">
+                                {task.assigneeId ? task.assigneeId.split("-").map((word) => word.charAt(0).toUpperCase()).join("") : "?"}
+                    </span>
                 </div>
             </div>
         </div>
