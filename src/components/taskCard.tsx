@@ -69,7 +69,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
                         {
                             task.tagId && (
                                 <span className="task-tag">
-                                    {task.tagId}
+                                    {task.tagId.split("-").join(" ")}
                                 </span>
                             )
                         }
