@@ -24,6 +24,10 @@ const Board = () => {
     (state) => state.tagFilter
   )
 
+  const sortBy = useBoardStore(
+    (state) => state.sortBy
+  );
+
   const filteredTasks = tasks
   .filter(
     (task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -52,15 +56,42 @@ const Board = () => {
       )
     })
 
-  const backlogTasks = filteredTasks.filter(
+    const sortedTasks = [...filteredTasks];
+
+    if(sortBy === "priority"){
+      const priorityOrder = {
+        high: 3,
+        medium: 2,
+        low: 1,
+      };
+
+      sortedTasks.sort(
+        (a,b) => priorityOrder[b.priority] - priorityOrder[a.priority]
+      );
+    }
+
+    if (sortBy === "dueDate") {
+        sortedTasks.sort(
+            (a, b) =>
+                new Date(
+                    a.dueDate || "9999-12-31"
+                ).getTime()
+                -
+                new Date(
+                    b.dueDate || "9999-12-31"
+                ).getTime()
+        );
+    }
+
+  const backlogTasks = sortedTasks.filter(
     (task) => task.column === "backlog"
   );
 
-  const progressTasks = filteredTasks.filter(
+  const progressTasks = sortedTasks.filter(
     (task) => task.column === "inProgress"
   );
 
-  const doneTasks = filteredTasks.filter(
+  const doneTasks = sortedTasks.filter(
     (task) => task.column === "done"
   );
 

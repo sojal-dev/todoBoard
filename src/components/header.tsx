@@ -41,12 +41,20 @@ const Header = () => {
         (state) => state.clearFilters
     );
 
+    const sortBy = useBoardStore(
+        (state) => state.sortBy
+    );
+    
+    const setSortBy = useBoardStore(
+        (state) => state.setSortBy
+    );
+
     return(
         <div className='header p-4'>
             <div className='header-top mb-4'>
                 <div className='d-flex gap-2 align-items-center'>
                     <AssignmentIcon className="fs-2"/>
-                    <h1 className='fw-bold fs-2 mb-0'>TODO BOARD</h1>
+                    <h1 className='fw-bold fs-2 mb-0'>SPRINTDESK</h1>
                 </div>
             </div>
             <div className='header-filters d-flex gap-3'>
@@ -79,6 +87,14 @@ const Header = () => {
                         <option value={"backend"}>Backend</option>
                         <option value={"bug"}>Bug</option>
                         <option value={"client-dependency"}>Client Dependency</option>
+                    </select>
+                </div>
+                <div className='filter-wrapper d-flex gap-2 align-items-center'>
+                    <label>Sort BY:</label>
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className='dropdown-filter'>
+                        <option value={"default"}>Default</option>
+                        <option value={"priority"}>Priority</option>
+                        <option value={"dueDate"}>Due Date</option>
                     </select>
                 </div>
                 <Button variant='contained' onClick={clearFilters}>

@@ -26,6 +26,10 @@ interface BoardStore {
   tagFilter: string;
   setTagFilter: (value: string) => void;
   clearFilters: () => void;
+  draggedTaskId: string | null;
+  setDraggedTaskId: (id: string | null) => void;
+  sortBy: string;
+  setSortBy: (value: string) => void;
 }
 
 export const useBoardStore = create<BoardStore>()(
@@ -101,6 +105,17 @@ export const useBoardStore = create<BoardStore>()(
               assigneeFilter: "",
               tagFilter: "",
               searchTerm: "",
+              sortBy: "default",
+            }),
+
+            draggedTaskId: null,
+            setDraggedTaskId: (id) => set({
+              draggedTaskId: id,
+            }),
+
+            sortBy: "default",
+            setSortBy: (value) => set({
+              sortBy: value,
             }),
     }),
     {

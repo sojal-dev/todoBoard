@@ -12,6 +12,10 @@ interface TaskCardProps {
 const TaskCard = ({ task }: TaskCardProps) => {
 
     const[showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTitle, setEditTitle] = useState(task.title);
+    
 
     const getPriorityColor = () => {
         switch(task.priority) {
@@ -38,6 +42,28 @@ const TaskCard = ({ task }: TaskCardProps) => {
         (state) => state.setSelectedTask
     );
 
+    const setDraggedTaskId = useBoardStore(
+        (state) => state.setDraggedTaskId
+    );
+
+    const updateTask = useBoardStore(
+        (state) => state.updateTask
+    );
+
+    const saveTitle = () => {
+        if (!editTitle.trim()) {
+            setEditTitle(task.title);
+            setIsEditing(false);
+            return;
+        }
+
+        updateTask(task.id, {
+            title: editTitle.trim(),
+        });
+
+        setIsEditing(false);
+    };
+
 
     // console.log(selectedTaskId);
     // console.log(task.assigneeId)
@@ -48,9 +74,44 @@ const TaskCard = ({ task }: TaskCardProps) => {
 
 
     return(
-        <div className="task-card" onClick={()=> setSelectedTask(task.id)}>
+        <div className={`task-card ${isDragging ? "dragging" : ""}`} onClick={()=> setSelectedTask(task.id)} draggable 
+        onDragStart={()=> {
+            setDraggedTaskId(task.id);
+            setIsDragging(true);
+        }}
+        onDragEnd={() => {
+            setIsDragging(false);
+            setDraggedTaskId(null);
+            }}>
             <div className="d-flex gap-2 align-items-center justify-content-between">
-                <h4 className="mb-0">{task.title}</h4>
+                {
+                    isEditing ? (
+                        <input
+                            autoFocus
+                            value={editTitle}
+                            onClick={(e) =>
+                                e.stopPropagation()
+                            }
+                            onChange={(e) =>
+                                setEditTitle(e.target.value)
+                            }
+                            onBlur={saveTitle}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    saveTitle();
+                                }
+                            }}
+                            className="value-edit"
+                        />
+                    ) : (
+                        <h4 className="mb-0" 
+                        onClick={(e) => e.stopPropagation()}
+                        onDoubleClick={(e) => {
+                            e.stopPropagation();    
+                            setEditTitle(task.title);
+                            setIsEditing(true);}}>{task.title}</h4>
+                    )
+                }
                 <div className="d-flex gap-3 align-items-center">
                     <div className="delete-btn">
                         {

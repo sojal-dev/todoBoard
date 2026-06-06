@@ -1,6 +1,7 @@
 import { useBoardStore } from "../store/boardStore";
 import { useState, useEffect } from "react";
 import { TextField, Button, MenuItem, FormControl, Select, Snackbar, Alert } from "@mui/material";
+import type { Task } from "../types/task";
 
 const TaskPanel = () => {
   const tasks = useBoardStore(
@@ -34,8 +35,8 @@ const TaskPanel = () => {
   const [dueDate, setDueDate] = useState("");
   const [assigneeId, setAssigneeId] = useState("");
   const [tagId, setTagId] = useState("");
-  const [toastOpen, setToastOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [column, setColumn] = useState<Task["column"]>("backlog");
 
   const handleClose = () => {
     if(isChange && !window.confirm("You have unsaved changes. Close anyway?")){
@@ -46,7 +47,7 @@ const TaskPanel = () => {
 
     useEffect(()=> {
         const handleKeyDown = (e: KeyboardEvent) => {
-            console.log("KEY:", e.key);
+            // console.log("KEY:", e.key);
             if(e.key === "Escape"){
                 handleClose();
             }
@@ -74,6 +75,7 @@ const TaskPanel = () => {
     setDueDate(selectedTask.dueDate || "");
     setAssigneeId(selectedTask.assigneeId || "");
     setTagId(selectedTask.tagId || "");
+    setColumn(selectedTask.column);
   }, [selectedTask]);
 
   if (!selectedTask) {
@@ -88,6 +90,7 @@ const TaskPanel = () => {
       dueDate,
       assigneeId,
       tagId,
+      column,
     });
     setIsChange(false);
     setToast("Task Updated Successfully");
@@ -230,6 +233,33 @@ const TaskPanel = () => {
 
                     <MenuItem value="client-dependency">
                         Client Dependency
+                    </MenuItem>
+                    </Select>
+                </FormControl>
+                </div>
+                <div className="fields">
+                <label>Move To</label>
+
+                <FormControl fullWidth>
+                    <Select
+                    value={column}
+                    onChange={(e) => {
+                        setColumn(
+                        e.target.value as Task["column"]
+                        )
+                        setIsChange(true)
+                    }}
+                    >
+                    <MenuItem value="backlog">
+                        Backlog
+                    </MenuItem>
+
+                    <MenuItem value="inProgress">
+                        In Progress
+                    </MenuItem>
+
+                    <MenuItem value="done">
+                        Done
                     </MenuItem>
                     </Select>
                 </FormControl>
