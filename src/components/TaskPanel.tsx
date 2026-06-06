@@ -37,8 +37,16 @@ const TaskPanel = () => {
   const [toastOpen, setToastOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
 
+  const handleClose = () => {
+    if(isChange && !window.confirm("You have unsaved changes. Close anyway?")){
+        return;
+    }
+    setSelectedTask(null);
+  };
+
     useEffect(()=> {
         const handleKeyDown = (e: KeyboardEvent) => {
+            console.log("KEY:", e.key);
             if(e.key === "Escape"){
                 handleClose();
             }
@@ -85,14 +93,6 @@ const TaskPanel = () => {
     setToast("Task Updated Successfully");
     setSelectedTask(null);
   };
-
-  const handleClose = () => {
-    if(isChange && !window.confirm("You have unsaved changes. Close anyway?")){
-        return;
-    }
-    setSelectedTask(null);
-  };
-
 
 
   return (

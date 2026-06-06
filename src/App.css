@@ -240,3 +240,18 @@ body:has(.task-detail-panel-wrapper)::before{
 .task-card .delete-confirm .green:hover{
     background-color: green;
 }
+.dropdown-filter{
+    border: 0;
+    border-radius: 4px;
+    padding: 0px 8px;
+}
+.dropdown-filter:focus{
+    outline: 0
+}
+.dropdown-filter{
+    height: 45px;
+}
+.search-box input{
+    height: 45px;
+    padding: 0px 15px;
+}

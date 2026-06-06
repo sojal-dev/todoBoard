@@ -21,6 +21,11 @@ interface BoardStore {
   setSearchTerm: (value: string) => void;
   priorityFilter: string;
   setPriorityFilter: (value: string) => void;
+  assigneeFilter: string;
+  setAssigneeFilter: (value: string) => void;
+  tagFilter: string;
+  setTagFilter: (value: string) => void;
+  clearFilters: () => void;
 }
 
 export const useBoardStore = create<BoardStore>()(
@@ -81,7 +86,23 @@ export const useBoardStore = create<BoardStore>()(
               priorityFilter: value,
             }),
 
+            assigneeFilter: "",
+            setAssigneeFilter: (value) => set({
+              assigneeFilter: value,
             }),
+
+            tagFilter: "",
+            setTagFilter: (value) => set({
+              tagFilter: value,
+            }),
+
+            clearFilters: () => set({
+              priorityFilter: "",
+              assigneeFilter: "",
+              tagFilter: "",
+              searchTerm: "",
+            }),
+    }),
     {
       name: "todoBoard-storage",
     }

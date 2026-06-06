@@ -16,7 +16,16 @@ const Board = () => {
       (state) => state.priorityFilter
   );
 
-  const filteredTasks = tasks.filter(
+  const assigneeFilter = useBoardStore(
+    (state) => state.assigneeFilter
+  );
+
+  const tagFilter = useBoardStore(
+    (state) => state.tagFilter
+  )
+
+  const filteredTasks = tasks
+  .filter(
     (task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
     .filter((task) => {
       if(!priorityFilter)
@@ -25,7 +34,23 @@ const Board = () => {
       return(
         task.priority === priorityFilter
       );
-    });
+    })
+    .filter((task) => {
+      if(!assigneeFilter)
+        return true;
+
+      return(
+        task.assigneeId === assigneeFilter
+      )
+    })
+    .filter((task) => {
+      if(!tagFilter)
+        return true;
+
+      return(
+        task.tagId === tagFilter
+      )
+    })
 
   const backlogTasks = filteredTasks.filter(
     (task) => task.column === "backlog"
