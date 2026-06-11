@@ -83,6 +83,8 @@ export const useBoardStore = create<BoardStore>()(
 
             closeToast: () => set({
               showToast: false,
+              lastDeletedTask: null,
+              toastType: "",
             }),
 
             searchTerm: "",
