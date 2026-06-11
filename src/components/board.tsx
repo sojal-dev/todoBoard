@@ -107,6 +107,17 @@ const Board = () => {
     (state) => state.closeToast
   );
 
+  const restoreTask = useBoardStore(
+    (state) => state.restoreTask
+  );
+
+  const lastDeletedTask = useBoardStore(
+    (state) => state.lastDeletedTask
+  );
+
+  const toastType = useBoardStore(
+    (state) => state.toastType
+  );
 
 
   return (
@@ -119,7 +130,7 @@ const Board = () => {
       </div>
       <Snackbar
         open={showToast}
-        autoHideDuration={3000}
+        autoHideDuration={8000}
         onClose={closeToast}
         anchorOrigin={{
           vertical: "top",
@@ -130,6 +141,15 @@ const Board = () => {
           severity="success"
           variant="filled"
           onClose={closeToast}
+          action={
+            toastType === "delete" &&
+            lastDeletedTask && (
+              <button onClick={() => {
+                restoreTask();
+                closeToast();
+              }} >UNDO</button>
+            )
+          }
         >
           {toastMessage}
         </Alert>

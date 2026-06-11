@@ -28,6 +28,9 @@ const TaskPanel = () => {
     (state) => state.setToast
   );
 
+  const setToastType = useBoardStore(
+    (state) => state.setToastType
+  );
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -94,6 +97,7 @@ const TaskPanel = () => {
     });
     setIsChange(false);
     setToast("Task Updated Successfully");
+    setToastType("update");
     setSelectedTask(null);
   };
 

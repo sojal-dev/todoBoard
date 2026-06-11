@@ -285,3 +285,28 @@ body:has(.task-detail-panel-wrapper)::before{
     border-bottom: 1px solid rgba(255,255,255,0.1);
     color: #fff
 }
+.MuiSnackbar-root .MuiPaper-root{
+    background-color: #1976d2;
+    font-family: 'Montserrat', sans-serif;
+    padding: 8px 24px;
+    align-items: center;
+    border-radius: 4px;
+}
+.MuiSnackbar-root .MuiAlert-action{
+    padding: 0;
+    margin: 0;
+}
+.MuiSnackbar-root .MuiAlert-action button{
+    background-color: transparent;
+    border:0;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding-left: 12px;
+    text-decoration: underline;
+    transition: all 0.3s;
+    display: block;
+}
+.MuiSnackbar-root .MuiAlert-action button:hover{
+    text-decoration: none;
+}

@@ -30,6 +30,11 @@ interface BoardStore {
   setDraggedTaskId: (id: string | null) => void;
   sortBy: string;
   setSortBy: (value: string) => void;
+  lastDeletedTask: Task | null;
+  setLastDeletedTask: (task: Task | null) => void;
+  restoreTask: () => void;
+  toastType: string;
+  setToastType: (type: string) => void;
 }
 
 export const useBoardStore = create<BoardStore>()(
@@ -117,6 +122,28 @@ export const useBoardStore = create<BoardStore>()(
             setSortBy: (value) => set({
               sortBy: value,
             }),
+
+            lastDeletedTask: null,
+            setLastDeletedTask: (task) => set({
+              lastDeletedTask: task,
+            }),
+            restoreTask: () => 
+              set((state) => {
+                if(!state.lastDeletedTask)
+                  return {};
+
+                return{
+                  tasks: [
+                    ...state.tasks,
+                    state.lastDeletedTask,
+                  ],
+                  lastDeletedTask: null,
+                };
+              }),
+              toastType: "",
+              setToastType: (type) => set({
+                toastType: type
+              }),
     }),
     {
       name: "todoBoard-storage",

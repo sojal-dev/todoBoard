@@ -34,10 +34,6 @@ const TaskCard = ({ task }: TaskCardProps) => {
         (state) => state.deleteTask
     );
 
-    const selectedTaskId = useBoardStore(
-        (state) => state.selectedTaskId
-    );
-
     const setSelectedTask = useBoardStore(
         (state) => state.setSelectedTask
     );
@@ -63,6 +59,18 @@ const TaskCard = ({ task }: TaskCardProps) => {
 
         setIsEditing(false);
     };
+    
+    const setLastDeletedTask = useBoardStore(
+        (state) => state.setLastDeletedTask
+    );
+
+    const setToast = useBoardStore(
+        (state) => state.setToast
+    );
+
+    const setToastType = useBoardStore(
+        (state) => state.setToastType
+    );
 
 
     // console.log(selectedTaskId);
@@ -118,7 +126,13 @@ const TaskCard = ({ task }: TaskCardProps) => {
                             showDeleteConfirm ? (
                                 <div className="delete-confirm d-flex gap-2 align-items-center" onClick={(e) => e.stopPropagation()}>
                                     <span>Delete?</span>
-                                    <button className="green" onClick={()=> deleteTask(task.id)}>Yes</button>
+                                    <button className="green" onClick={()=> {
+                                        setLastDeletedTask(task);
+                                        deleteTask(task.id);
+                                        setToast("Task Deleted");
+                                        setToastType("delete");
+                                        setShowDeleteConfirm(false);
+                                        }}>Yes</button>
                                     <button onClick={()=> setShowDeleteConfirm(false)}>Cancel</button>
                                 </div>
                             ) : (

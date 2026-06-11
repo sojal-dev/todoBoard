@@ -90,7 +90,7 @@ const Header = () => {
                     </select>
                 </div>
                 <div className='filter-wrapper d-flex gap-2 align-items-center'>
-                    <label>Sort BY:</label>
+                    <label>Sort By:</label>
                     <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className='dropdown-filter'>
                         <option value={"default"}>Default</option>
                         <option value={"priority"}>Priority</option>
